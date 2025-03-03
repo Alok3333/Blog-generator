@@ -56,9 +56,47 @@ const BlogList = () => {
         onChange={(e) => setSearch(e.target.value)}
         sx={{ marginBottom: "20px" }}
       />
-      <Grid container spacing={3}>
-        {filteredPosts.map((post) => (
-          <Grid item xs={12} sm={6} md={4} key={post._id}>
+      {!posts ? (
+        <Grid container spacing={3}>
+          {filteredPosts.map((post) => (
+            <Grid item xs={12} sm={6} md={4} key={post._id}>
+              <Card
+                sx={{
+                  boxShadow: 3,
+                  borderRadius: 2,
+                  transition: "transform 0.3s",
+                }}
+                className="card-hover"
+              >
+                <CardContent>
+                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                    {post.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ marginBottom: 2 }}
+                  >
+                    {post.content.slice(0, 100)}...
+                  </Typography>
+                  <Link to={`/post/${post._id}`}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      sx={{ padding: "6px 16px" }}
+                    >
+                      Read More
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        // Demo data for showing
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6} md={4}>
             <Card
               sx={{
                 boxShadow: 3,
@@ -69,16 +107,16 @@ const BlogList = () => {
             >
               <CardContent>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  {post.title}
+                  Blog demo
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   sx={{ marginBottom: 2 }}
                 >
-                  {post.content.slice(0, 100)}...
+                  This is Blog demo content
                 </Typography>
-                <Link to={`/post/${post._id}`}>
+                <Link to={`/post/1`}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -90,8 +128,8 @@ const BlogList = () => {
               </CardContent>
             </Card>
           </Grid>
-        ))}
-      </Grid>
+        </Grid>
+      )}
     </Container>
   );
 };
